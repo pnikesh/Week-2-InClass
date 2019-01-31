@@ -4,45 +4,38 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    //public variables
+    // PUBLIC VARIABLES
     public float speed = 10.0f;
-    public float jumpForce = 1000;
+    public float jumpForce = 500.0f;
 
-
-    //Private veriables
+    // PRIVATE VARIABLES
     private Rigidbody2D rBody;
+    private bool canJump = false;
 
-    /// <summary>
-    /// Start is called on the frame when a script is enabled just before
-    /// any of the Update methods is called the first time.
-    /// </summary>
-    //reserved function. Runs only once when the object is created
+    // Reserved function. Runs only once when the object is created.
+    // Used for initialization
     void Start()
     {
-       rBody = GetComponent<Rigidbody2D>(); 
+        rBody = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))     //listen to spacebar key
+        if(Input.GetKeyDown(KeyCode.Space)) // Listens to my space bar key being pressed
         {
-            rBody.AddForce(new Vector2(0 , jumpForce));
+            rBody.AddForce(new Vector2(0, jumpForce));
+            canJump = false;
         }
     }
-    //Ray cast from your feet doenwords twards the ground
-    
-
 
     /// <summary>
-   /// This function is called every fixed framerate frame, if the MonoBehaviour is enabled.
-   ///Use fixed update for physics based movements only 
-   ///</summary>
-   void FixedUpdate()
-   {
-       float horiz = Input.GetAxis("Horizontal");
-      // float vert = Input.GetAxis("Vertical");
+    /// This function is called every fixed framerate frame, if the MonoBehaviour is enabled.
+    /// Use FixedUpdate for Physics-based movement only
+    /// </summary>
+    void FixedUpdate()
+    {
+        float horiz = Input.GetAxis("Horizontal");
 
-       //GetComponent<Rigidbody2D>().velocity = new Vector2(horiz,vert);
-       rBody.velocity = new Vector2(horiz * speed, rBody.velocity.y);
-   }
+        rBody.velocity = new Vector2(horiz * speed, rBody.velocity.y);
+    }
 }
